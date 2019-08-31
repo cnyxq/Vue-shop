@@ -1,6 +1,7 @@
 <template>
   <div id="app">
       <!--内容区-->
+      <router-view></router-view>
       <!--底部区-->
       <footer-guide></footer-guide>
   </div>
