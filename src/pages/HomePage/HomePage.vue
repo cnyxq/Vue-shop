@@ -1,20 +1,16 @@
 <template>
     <section class="content">
-        <!--首页外卖-->
         <div class="on">
             <section class="homepage">
                 <!--首页头部-->
-                <header class="homepage_header">
-          <span class="header_search">
-            <i class="iconfont icon-sousuo"></i>
-          </span>
-                    <span class="header_title">
-            <span class="header_title_text ellipsis">昌平区北七家宏福科技园(337省道北)</span>
-          </span>
-                    <span class="header_login">
-            <span class="header_login_text">登录|注册</span>
-          </span>
-                </header>
+                <header-top title="武夷学院">
+                    <span class="header_search" slot="left">
+                        <i class="iconfont icon-sousuo"></i>
+                    </span>
+                    <span class="header_login" slot="right">
+                        <span class="header_login_text">登录|注册</span>
+                    </span>
+                </header-top>
                 <!--首页导航-->
                 <nav class="homepage_nav">
                     <div class="swiper-container">
@@ -313,138 +309,27 @@
                 </div>
             </section>
         </div>
-        <!--搜索-->
-        <div>
-            <section class="search">
-                <header class="header">
-                    <a class="header_title">
-                        <span class="header_title_text">搜索</span>
-                    </a>
-                </header>
-                <form class="search_form" action="#">
-                    <input type="search" name="search" placeholder="请输入商家或美食名称" class="search_input">
-                    <input type="submit" name="submit" class="search_submit">
-                </form>
-            </section>
-        </div>
-        <!--订单-->
-        <div>
-            <section class="order">
-                <header class="header">
-                    <a class="header_title">
-                        <span class="header_title_text">订单列表</span>
-                    </a>
-                </header>
-                <section class="order_no_login">
-                    <img src="./images/order/person.png">
-                    <h3>登录后查看外卖订单</h3>
-                    <button>立即登陆</button>
-                </section>
-            </section>
-        </div>
-        <!--我的-->
-        <div>
-            <section class="profile">
-                <header class="header">
-                    <a class="header_title">
-                        <span class="header_title_text">我的</span>
-                    </a>
-                </header>
-                <section class="profile-number">
-                    <a href="javascript:" class="profile-link">
-                        <div class="profile_image">
-                            <i class="iconfont icon-person"></i>
-                        </div>
-                        <div class="user-info">
-                            <p class="user-info-top">登录/注册</p>
-                            <p>
-                <span class="user-icon">
-                  <i class="iconfont icon-shouji icon-mobile"></i>
-                </span>
-                                <span class="icon-mobile-number">暂无绑定手机号</span>
-                            </p>
-                        </div>
-                        <span class="arrow">
-              <i class="iconfont icon-jiantou1"></i>
-            </span>
-                    </a>
-                </section>
-                <section class="profile_info_data border-1px">
-                    <ul class="info_data_list">
-                        <a href="javascript:" class="info_data_link">
-                            <span class="info_data_top"><span>0.00</span>元</span>
-                            <span class="info_data_bottom">我的余额</span>
-                        </a>
-                        <a href="javascript:" class="info_data_link">
-                            <span class="info_data_top"><span>0</span>个</span>
-                            <span class="info_data_bottom">我的优惠</span>
-                        </a>
-                        <a href="javascript:" class="info_data_link">
-                            <span class="info_data_top"><span>0</span>分</span>
-                            <span class="info_data_bottom">我的积分</span>
-                        </a>
-                    </ul>
-                </section>
-                <section class="profile_my_order border-1px">
-                    <!-- 我的订单 -->
-                    <a href='javascript:' class="my_order">
-            <span>
-              <i class="iconfont icon-order-s"></i>
-            </span>
-                        <div class="my_order_div">
-                            <span>我的订单</span>
-                            <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
-                        </div>
-                    </a>
-                    <!-- 积分商城 -->
-                    <a href='javascript:' class="my_order">
-            <span>
-              <i class="iconfont icon-jifen"></i>
-            </span>
-                        <div class="my_order_div">
-                            <span>积分商城</span>
-                            <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
-                        </div>
-                    </a>
-                    <!-- 硅谷外卖会员卡 -->
-                    <a href="javascript:" class="my_order">
-            <span>
-              <i class="iconfont icon-vip"></i>
-            </span>
-                        <div class="my_order_div">
-                            <span>硅谷外卖会员卡</span>
-                            <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
-                        </div>
-                    </a>
-                </section>
-                <section class="profile_my_order border-1px">
-                    <!-- 服务中心 -->
-                    <a href="javascript:" class="my_order">
-            <span>
-              <i class="iconfont icon-fuwu"></i>
-            </span>
-                        <div class="my_order_div">
-                            <span>服务中心</span>
-                            <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
-                        </div>
-                    </a>
-                </section>
-            </section>
-        </div>
     </section>
 </template>
 
 <script>
+  import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+  import Swiper from 'swiper'
+  import 'swiper/dist/css/swiper.css'
   export default {
-    name: 'homePage'
+    name: 'homePage',
+    mounted () {
+      new Swiper('.swiper-container',{
+        loop: true, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        }
+      })
+    },
+    components: {
+      'header-top': HeaderTop
+    }
   }
 </script>
 
@@ -452,45 +337,6 @@
     @import "../../common/stylus/mixins.styl"
     .homepage  //首页
         width 100%
-        .homepage_header
-            background-color #02a774
-            position fixed
-            z-index 100
-            left 0
-            top 0
-            width 100%
-            height 45px
-            .header_search
-                position absolute
-                left 15px
-                top 50%
-                transform translateY(-50%)
-                width 10%
-                height 50%
-                .icon-sousuo
-                    font-size 25px
-                    color #fff
-            .header_title
-                position absolute
-                top 50%
-                left 50%
-                transform translate(-50%, -50%)
-                width 50%
-                color #fff
-                text-align center
-                .header_title_text
-                    font-size 20px
-                    color #fff
-                    display block
-            .header_login
-                font-size 14px
-                color #fff
-                position absolute
-                right 15px
-                top 50%
-                transform translateY(-50%)
-                .header_login_text
-                    color #fff
         .homepage_nav
             bottom-border-1px(#e4e4e4)
             margin-top 45px
