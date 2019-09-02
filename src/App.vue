@@ -3,7 +3,7 @@
       <!--内容区-->
       <router-view></router-view>
       <!--底部区-->
-      <footer-guide></footer-guide>
+      <footer-guide v-show="$route.meta.showFooter"></footer-guide>
   </div>
 </template>
 
@@ -18,6 +18,5 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    #app
-        color: red
+
 </style>

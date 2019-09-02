@@ -15,6 +15,7 @@
     }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
+    @import '../../common/stylus/mixins.styl'
     .header
         background-color #02a774
         position fixed
@@ -45,6 +46,9 @@
                 font-size 20px
                 color #fff
                 display block
+                white-space nowrap;/*规定段落中的文本不进行换行*/
+                overflow hidden;/*内容会被修剪，并且其余内容是不可见的。*/
+                text-overflow ellipsis;/*显示省略号来代表被修剪的文本*/
         .header_login
             font-size 14px
             color #fff

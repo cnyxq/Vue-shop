@@ -19,6 +19,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+    @import '../../common/stylus/mixins.styl'
     .search  //搜索
         .header //头部公共css
             background-color #02a774

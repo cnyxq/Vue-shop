@@ -3,14 +3,16 @@ import HomePage from '../pages/HomePage/HomePage.vue'
 import Order from '../pages/Order/Order.vue'
 import Center from '../pages/Center/Center.vue'
 import Search from '../pages/Search/Search.vue'
+import Login from "../pages/Login/Login.vue";
 
 let routerObj = new VueRouter({
   routes: [
     { path: '/',redirect: '/homepage' },
-    { path: '/homepage',component: HomePage },
-    { path: '/order',component: Order },
-    { path: '/center',component: Center },
-    { path: '/search',component: Search },
+    { path: '/homepage',component: HomePage,meta: { showFooter: true } },
+    { path: '/order',component: Order,meta: { showFooter: true } },
+    { path: '/center',component: Center,meta: { showFooter: true } },
+    { path: '/search',component: Search,meta: { showFooter: true } },
+    { path: '/login',component: Login,meta: { showFooter: false } }
   ]
 })
 

@@ -2,23 +2,23 @@
     <section class="center">
         <header-top title="我的"></header-top>
         <section class="center-number">
-            <a href="javascript:" class="center-link">
+            <router-link class="center-link" to="/login">
                 <div class="center_image">
                     <i class="iconfont icon-person"></i>
                 </div>
                 <div class="user-info">
                     <p class="user-info-top">登录/注册</p>
                     <p>
-                <span class="user-icon">
-                  <i class="iconfont icon-shouji icon-mobile"></i>
-                </span>
+                        <span class="user-icon">
+                            <i class="iconfont icon-shouji icon-mobile"></i>
+                        </span>
                         <span class="icon-mobile-number">暂无绑定手机号</span>
                     </p>
                 </div>
                 <span class="arrow">
-              <i class="iconfont icon-jiantou1"></i>
-            </span>
-            </a>
+                    <i class="iconfont icon-jiantou1"></i>
+                </span>
+            </router-link>
         </section>
         <section class="center_info_data border-1px">
             <ul class="info_data_list">
@@ -40,7 +40,7 @@
             <!-- 我的订单 -->
             <a href='javascript:' class="my_order">
             <span>
-              <i class="iconfont icon-order-s"></i>
+              <i class="iconfont icon-lvsefenkaicankaoxianban-"></i>
             </span>
                 <div class="my_order_div">
                     <span>我的订单</span>
@@ -52,7 +52,7 @@
             <!-- 积分商城 -->
             <a href='javascript:' class="my_order">
             <span>
-              <i class="iconfont icon-jifen"></i>
+              <i class="iconfont icon-tubiaozhizuomoban-"></i>
             </span>
                 <div class="my_order_div">
                     <span>积分商城</span>
@@ -64,10 +64,10 @@
             <!-- 硅谷外卖会员卡 -->
             <a href="javascript:" class="my_order">
             <span>
-              <i class="iconfont icon-vip"></i>
+              <i class="iconfont icon-filedicon_memberco"></i>
             </span>
                 <div class="my_order_div">
-                    <span>硅谷外卖会员卡</span>
+                    <span>武夷外卖会员卡</span>
                     <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
@@ -102,6 +102,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+    @import '../../common/stylus/mixins.styl'
     .center //我的
         .header //头部公共css
             background-color #02a774
