@@ -27,7 +27,6 @@ module.exports = {
           '^/api': ''
         }
       }
-    },
-    before: app => {}
+    }
   }
 }
