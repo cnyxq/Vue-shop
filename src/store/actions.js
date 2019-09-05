@@ -10,19 +10,27 @@ import {
 } from "../api"
 
 export default {
-  getAddress({commit, state}) {
+  async getAddress({commit, state}) {
     const geohash = state.latitude + ',' + state.longitude
-    const result = reqAddress(geohash)
+    const result = await reqAddress(geohash)
     if (result.code === 0) {
       const address = result.data
       commit(RECEIVE_ADDRESS, {address})
     }
   },
-  getFoodTypes({commit}) {
-    const result = reqFoodTypes()
+  async getFoodTypes({commit}) {
+    const result = await reqFoodTypes()
     if (result.code === 0) {
       const foodTypes = result.data
       commit(RECEIVE_FOODTYPES, {foodTypes})
+    }
+  },
+  async getShopList({commit,state}) {
+    const { longitude, latitude } = state
+    const result = await reqShopList(longitude, latitude)
+    if (result.code === 0) {
+      const shopList = result.data
+      commit(RECEIVE_SHOPLIST, {shopList})
     }
   }
 }
