@@ -13,7 +13,7 @@
                 </header-top>
                 <!--首页导航-->
                 <nav class="homepage_nav">
-                    <div class="swiper-container">
+                    <div class="swiper-container" v-if="foodTypesArr.length">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide" v-for="(foodTypes, index) in foodTypesArr" :key="index">
                                 <a href="javascript:" class="link_to_food" v-for="(item, index) in foodTypes" :key="index">
@@ -27,6 +27,7 @@
                         <!-- Add Pagination -->
                         <div class="swiper-pagination"></div>
                     </div>
+                    <img src="./images/msite_back.svg" alt="back" v-else>
                 </nav>
                 <!--首页附近商家-->
                 <shop-list></shop-list>
@@ -48,20 +49,35 @@
         baseImageUrl: 'https://fuss10.elemecdn.com'
       }
     },
+    created () {
+      this.getAddress()
+      this.getFoodTypes()
+    },
     mounted () {
-      new Swiper('.swiper-container',{
+      /*new Swiper('.swiper-container',{
         loop: true, // 循环模式选项
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
         }
-      })
+      })*/
       //this.$store.dispatch('getAddress')
-      this.getAddress()
-      this.getFoodTypes()
     },
     methods: {
       ...mapActions(['getAddress','getFoodTypes']),
+    },
+    watch: {
+      foodTypesArr () { // 数据更新之后，界面更新后创建swiper对象
+        this.$nextTick(() => {
+          new Swiper('.swiper-container',{
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+            }
+          })
+        })
+      }
     },
     computed: {
       /*由于页面显示缘故，得将数据每八个存进二维数组中*/
