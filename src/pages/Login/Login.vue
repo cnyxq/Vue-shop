@@ -4,16 +4,16 @@
             <div class="login_header">
                 <h2 class="login_logo">武夷外卖</h2>
                 <div class="login_header_title">
-                    <a href="javascript:;" class="on">短信登录</a>
-                    <a href="javascript:;">密码登录</a>
+                    <a href="javascript:;" :class="{on: loginNote}" @click.prevent="loginNote=true">短信登录</a>
+                    <a href="javascript:;" :class="{on: !loginNote}" @click.prevent="loginNote=false">密码登录</a>
                 </div>
             </div>
             <div class="login_content">
                 <form>
-                    <div class="on">
+                    <div :class="{on: loginNote}">
                         <section class="login_message">
-                            <input type="tel" maxlength="11" placeholder="手机号">
-                            <button disabled="disabled" class="get_verification">获取验证码</button>
+                            <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
+                            <button disabled="disabled" class="get_verification" :class="{right_phone: rightPhone}">获取验证码</button>
                         </section>
                         <section class="login_verification">
                             <input type="tel" maxlength="8" placeholder="验证码">
@@ -23,7 +23,7 @@
                             <a href="javascript:;">《用户服务协议》</a>
                         </section>
                     </div>
-                    <div>
+                    <div :class="{on: !loginNote}">
                         <section>
                             <section class="login_message">
                                 <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
@@ -54,9 +54,20 @@
 <script>
   export default {
     name: 'login',
+    data () {
+      return {
+        loginNote: true, // true表示短信登录，false表示密码登录
+        phone: ''
+      }
+    },
     methods: {
       back: function () {
         this.$router.go(-1)
+      }
+    },
+    computed: {
+      rightPhone () {
+        return /^1[34578]\d{9}/.test(this.phone)
       }
     }
   }
@@ -124,6 +135,8 @@
                                 color #ccc
                                 font-size 14px
                                 background transparent
+                                &.right_phone
+                                    color: black
                         .login_verification
                             position relative
                             margin-top 16px
