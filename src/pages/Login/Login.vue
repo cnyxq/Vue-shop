@@ -13,10 +13,10 @@
                     <div :class="{on: loginNote}">
                         <section class="login_message">
                             <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
-                            <button disabled="disabled" class="get_verification" :class="{right_phone: rightPhone}">获取验证码</button>
+                            <button :disabled="!rightPhone" class="get_verification" :class="{right_phone: rightPhone}" @click.prevent="getCode">{{count>0?`已发送(${count}s)`:'获取验证码'}}</button>
                         </section>
                         <section class="login_verification">
-                            <input type="tel" maxlength="8" placeholder="验证码">
+                            <input type="tel" maxlength="8" placeholder="验证码" v-model="code">
                         </section>
                         <section class="login_hint">
                             温馨提示：未注册武夷外卖帐号的手机号，登录时将自动注册，且代表已同意
@@ -26,22 +26,23 @@
                     <div :class="{on: !loginNote}">
                         <section>
                             <section class="login_message">
-                                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
+                                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名" v-model="userName">
                             </section>
                             <section class="login_verification">
-                                <input type="tel" maxlength="8" placeholder="密码">
-                                <div class="switch_button off">
-                                    <div class="switch_circle"></div>
-                                    <span class="switch_text">...</span>
+                                <input type="text" maxlength="8" placeholder="密码" v-if="showPwd" v-model="pwd">
+                                <input type="password" maxlength="8" placeholder="密码" v-else v-model="pwd">
+                                <div class="switch_button" @click="showPwd=!showPwd" :class="{off:!showPwd,on:showPwd}">
+                                    <div class="switch_circle" :class="{right:showPwd}"></div>
+                                    <span class="switch_text">{{showPwd?'abc':''}}</span>
                                 </div>
                             </section>
                             <section class="login_message">
                                 <input type="text" maxlength="11" placeholder="验证码">
-                                <img class="get_verification" src="./captcha.svg" alt="captcha">
+                                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha">
                             </section>
                         </section>
                     </div>
-                    <button class="login_submit">登录</button>
+                    <button class="login_submit" @click.prevent="login">登录</button>
                 </form>
                 <a href="javascript:;" class="about_us">关于我们</a>
             </div>
@@ -49,26 +50,121 @@
                 <i class="iconfont icon-icon-test4"></i>
             </a>
         </div>
+        <alert-tip v-if="isShowAlert" :alertText="alertText" @closeTip="closeTip" @click="closeTip"></alert-tip>
     </section>
 </template>
 <script>
+  import AlertTip from "../../components/AlertTip/AlertTip.vue";
+  import {reqSmsCode, reqPwdLogin, reqSmsLogin} from "../../api";
+
   export default {
     name: 'login',
     data () {
       return {
         loginNote: true, // true表示短信登录，false表示密码登录
-        phone: ''
+        phone: '', // 手机号
+        count: 0, // 已发送验证码记时
+        code: '', // 验证码
+        showPwd: false, // 是否显示密码
+        pwd: '', //密码
+        isShowAlert: false, // 是否显示警告弹窗
+        alertText: '', // 警告窗内容
+        captcha: '', // 图片验证码
+        userName: '',
+        user: {}
       }
     },
     methods: {
       back: function () {
         this.$router.go(-1)
+      },
+      async getCode () {
+        if(this.count === 0){//当count的值为0时说明并没有定时器在运行
+          //启动倒计时
+          this.count = 30
+          const intervalObj = setInterval(() => {
+            this.count--
+            if (this.count <= 0) {
+              clearInterval(intervalObj)
+              this.count = 0
+            }
+          },1000)
+          /*const intervalObj = setInterval(function () {
+            console.log(this)//此处this指向windows
+            this.count--
+            if (this.count <= 0) {
+              clearInterval(intervalObj)
+            }
+          },1000)*/
+          //发送ajax请求（向指定手机号发送验证码）
+          const result = await reqSmsCode(this.phone)
+          if(result.code === 1){
+            this.isShowAlert = true
+            this.alertText = result.msg
+            clearInterval(intervalObj)
+            this.count = 0
+          }
+        }
+      },
+      /*前台登录验证*/
+      async login () {
+        let result
+        if(this.loginNote){ // 短信登录表单验证
+          const { rightPhone, code } = this
+          if(!rightPhone){
+            this.isShowAlert = true
+            this.alertText = '手机号错误'
+            return
+          }else if(!/^\d{6}$/.test(code)){
+            this.isShowAlert = true
+            this.alertText = '验证码错误'
+            return
+          }
+          /*发送ajax请求短信登录*/
+          result = await reqSmsLogin(this.phone, this.code)
+
+        }else{ // 密码登录表单验证
+          const { userName, pwd, captcha } = this
+          if (!userName) {
+            this.isShowAlert = true
+            this.alertText = '用户名错误'
+            return
+          } else if (!pwd) {
+            this.isShowAlert = true
+            this.alertText = '密码错误'
+            return
+          } else if (!captcha) {
+            this.isShowAlert = true
+            this.alertText = '验证码错误'
+            return
+          }
+          /*发送ajax请求密码登录*/
+          result = await reqPwdLogin(this.userName,this.pwd,this.captcha)
+
+        }
+        if(result.code === 1){
+          this.isShowAlert = true
+          this.alertText = result.msg
+        }else{
+          this.user = result.data
+        }
+      },
+      closeTip: function () {
+        this.isShowAlert = false
+        this.alertText = ''
+      },
+      /*更新图片验证码*/
+      getCaptcha: function (event) {
+        event.target.src = 'http://localhost:4000/captcha'
       }
     },
     computed: {
       rightPhone () {
         return /^1[34578]\d{9}/.test(this.phone)
       }
+    },
+    components: {
+      'alert-tip': AlertTip
     }
   }
 </script>
@@ -176,6 +272,8 @@
                                     background #fff
                                     box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
                                     transition transform .3s
+                                    &.right
+                                      transform translateX(30px)
                         .login_hint
                             margin-top 12px
                             color #999
