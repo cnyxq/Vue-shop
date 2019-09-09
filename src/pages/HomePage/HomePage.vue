@@ -5,10 +5,10 @@
                 <!--首页头部-->
                 <header-top :title="this.$store.state.address.name">
                     <span class="header_search" slot="left">
-                        <i class="iconfont icon-sousuo"></i>
+                        <router-link class="iconfont icon-sousuo" to="/search"></router-link>
                     </span>
                     <span class="header_login" slot="right">
-                        <span class="header_login_text">登录|注册</span>
+                        <router-link class="header_login_text" :to="userInfo._id ? '/userInfo' : '/login'">{{userInfo._id ? '我的' : '登录|注册'}}</router-link>
                     </span>
                 </header-top>
                 <!--首页导航-->
@@ -41,7 +41,7 @@
   import ShopList from '../../components/ShopList/ShopList.vue'
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.css'
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
   export default {
     name: 'homePage',
     data () {
@@ -80,6 +80,7 @@
       }
     },
     computed: {
+      ...mapState(['userInfo']),
       /*由于页面显示缘故，得将数据每八个存进二维数组中*/
       foodTypesArr () {
         const foodTypesArr = [] // 总数组

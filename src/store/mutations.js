@@ -1,7 +1,8 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_FOODTYPES,
-  RECEIVE_SHOPLIST
+  RECEIVE_SHOPLIST,
+  RECEIVE_USERINFO
 } from './mutation-types.js'
 
 export default {
@@ -13,5 +14,8 @@ export default {
   },
   [RECEIVE_SHOPLIST] (state,{ shopList }) {
     state.shopList = shopList
+  },
+  [RECEIVE_USERINFO] (state,{ userInfo }) {
+    state.userInfo = userInfo
   }
 }

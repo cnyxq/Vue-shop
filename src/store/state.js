@@ -3,5 +3,6 @@ export default {
   longitude: 118.0044200000,// 经度
   address: {},// 地址
   foodTypes: [],// 食品分类
-  shopList: []// 商家列表
+  shopList: [],// 商家列表
+  userInfo: {}// 用户信息
 }

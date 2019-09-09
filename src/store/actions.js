@@ -1,7 +1,8 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_FOODTYPES,
-  RECEIVE_SHOPLIST
+  RECEIVE_SHOPLIST,
+  RECEIVE_USERINFO
 } from "./mutation-types";
 import {
   reqAddress,
@@ -32,5 +33,8 @@ export default {
       const shopList = result.data
       commit(RECEIVE_SHOPLIST, {shopList})
     }
+  },
+  recordUserInfo({commit},userInfo) {
+    commit(RECEIVE_USERINFO,{userInfo})
   }
 }

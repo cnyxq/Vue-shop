@@ -2,17 +2,17 @@
     <section class="center">
         <header-top title="我的"></header-top>
         <section class="center-number">
-            <router-link class="center-link" to="/login">
+            <router-link class="center-link" :to="userInfo._id ? '/userInfo':'/login'">
                 <div class="center_image">
                     <i class="iconfont icon-person"></i>
                 </div>
                 <div class="user-info">
-                    <p class="user-info-top">登录/注册</p>
+                    <p class="user-info-top" v-if="!userInfo.phone">{{userInfo.name || '登录/注册'}}</p>
                     <p>
                         <span class="user-icon">
-                            <i class="iconfont icon-shouji icon-mobile"></i>
+                            <i class="iconfont icon-shouji2 icon-mobile"></i>
                         </span>
-                        <span class="icon-mobile-number">暂无绑定手机号</span>
+                        <span class="icon-mobile-number">{{userInfo.phone || '暂无绑定手机号'}}</span>
                     </p>
                 </div>
                 <span class="arrow">
@@ -93,10 +93,15 @@
 
 <script>
   import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+  import {mapState} from 'vuex'
   export default {
     name: 'center',
     components: {
       'header-top': HeaderTop
+    },
+    methods: {},
+    computed: {
+      ...mapState(['userInfo'])
     }
   }
 </script>

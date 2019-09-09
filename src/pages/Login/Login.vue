@@ -37,8 +37,8 @@
                                 </div>
                             </section>
                             <section class="login_message">
-                                <input type="text" maxlength="11" placeholder="验证码">
-                                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha">
+                                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
+                                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha" ref="captcha">
                             </section>
                         </section>
                     </div>
@@ -135,7 +135,7 @@
             return
           } else if (!captcha) {
             this.isShowAlert = true
-            this.alertText = '验证码错误'
+            this.alertText = '请输入正确的验证码'
             return
           }
           /*发送ajax请求密码登录*/
@@ -145,8 +145,11 @@
         if(result.code === 1){
           this.isShowAlert = true
           this.alertText = result.msg
+          this.getCaptcha() // 登录失败刷新一次图形验证码
         }else{
           this.user = result.data
+          this.$store.dispatch('recordUserInfo',this.user)
+          this.$router.replace('/center') // 登录成功后返回用户中心
         }
       },
       closeTip: function () {
@@ -154,8 +157,8 @@
         this.alertText = ''
       },
       /*更新图片验证码*/
-      getCaptcha: function (event) {
-        event.target.src = 'http://localhost:4000/captcha'
+      getCaptcha: function () {
+        this.$refs.captcha.src = 'http://localhost:4000/captcha'
       }
     },
     computed: {
