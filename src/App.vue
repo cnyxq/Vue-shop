@@ -9,13 +9,17 @@
 
 <script>
 import FooterGuide from './components/FooterGuide/FooterGuide.vue'
+import {mapActions} from 'vuex'
 export default {
   name: 'app',
   components: {
     'footer-guide': FooterGuide
   },
-  mounted () {
-
+  created () {
+    this.getUserInfo()
+  },
+  methods: {
+    ...mapActions(['getUserInfo'])
   }
 }
 </script>

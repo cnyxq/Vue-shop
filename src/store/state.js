@@ -4,5 +4,8 @@ export default {
   address: {},// 地址
   foodTypes: [],// 食品分类
   shopList: [],// 商家列表
-  userInfo: {}// 用户信息
+  userInfo: {},// 用户信息
+  shopGoods: [],
+  shopRatings: [],
+  shopInfo: {}
 }

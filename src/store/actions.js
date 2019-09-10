@@ -2,12 +2,21 @@ import {
   RECEIVE_ADDRESS,
   RECEIVE_FOODTYPES,
   RECEIVE_SHOPLIST,
-  RECEIVE_USERINFO
+  RECEIVE_USERINFO,
+  RESET_USERINFO,
+  RECEIVE_SHOPGOODS,
+  RECEIVE_SHOPINFO,
+  RECEIVE_SHOPRATINGS
 } from "./mutation-types";
 import {
   reqAddress,
   reqFoodTypes,
-  reqShopList
+  reqLogout,
+  reqShopList,
+  reqUserInfo,
+  reqShopGoods,
+  reqShopInfo,
+  reqShopRatings
 } from "../api"
 
 export default {
@@ -36,5 +45,39 @@ export default {
   },
   recordUserInfo({commit},userInfo) {
     commit(RECEIVE_USERINFO,{userInfo})
+  },
+  async getUserInfo({commit}) {
+    const result = await reqUserInfo()
+    if(result.code === 0){
+      const userInfo = result.data
+      commit(RECEIVE_USERINFO,{userInfo})
+    }
+  },
+  async logout({commit}) {
+    const result = await reqLogout()
+    if(result.code === 0){
+      commit(RESET_USERINFO)
+    }
+  },
+  async getShopGoods({commit}) {
+    const result = await reqShopGoods()
+    if (result.code === 0){
+      const shopGoods = result.data
+      commit(RECEIVE_SHOPGOODS,{shopGoods})
+    }
+  },
+  async getShopRatings({commit}) {
+    const result = await reqShopRatings()
+    if(result.code === 0){
+      const shopRatings = result.data
+      commit(RECEIVE_SHOPRATINGS,{shopRatings})
+    }
+  },
+  async getShopInfo({commit}){
+    const result = await reqShopInfo()
+    if(result.code === 0){
+      const shopInfo =result.data
+      commit(RECEIVE_SHOPINFO,{shopInfo})
+    }
   }
 }

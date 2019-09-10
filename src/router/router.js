@@ -5,6 +5,10 @@ import Center from '../pages/Center/Center.vue'
 import Search from '../pages/Search/Search.vue'
 import Login from "../pages/Login/Login.vue";
 import UserInfo from "../pages/UserInfo/UserInfo.vue"
+import Shop from "../pages/Shop/Shop.vue";
+import ShopGoods from "../pages/Shop/ShopGoods/ShopGoods";
+import ShopRatings from "../pages/Shop/ShopRatings/ShopRatings";
+import ShopInfo from "../pages/Shop/ShopInfo/ShopInfo";
 
 let routerObj = new VueRouter({
   routes: [
@@ -14,7 +18,32 @@ let routerObj = new VueRouter({
     { path: '/center',component: Center,meta: { showFooter: true } },
     { path: '/search',component: Search,meta: { showFooter: true } },
     { path: '/login',component: Login,meta: { showFooter: false } },
-    { path: '/userInfo',component: UserInfo,meta: { showFooter: false }}
+    { path: '/userInfo',component: UserInfo,meta: { showFooter: false } },
+    {
+      path: '/shop',
+      component: Shop,
+      meta: {
+        showFooter: false
+      },
+      children: [
+        {
+          path: '',
+          redirect: '/shop/goods'
+        },
+        {
+          path: '/shop/ratings',
+          component: ShopRatings
+        },
+        {
+          path: '/shop/goods',
+          component: ShopGoods
+        },
+        {
+          path: '/shop/info',
+          component: ShopInfo
+        }
+      ]
+    }
   ]
 })
 
