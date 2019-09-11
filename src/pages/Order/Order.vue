@@ -19,7 +19,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
     .order  //订单
         .header
             background-color #02a774

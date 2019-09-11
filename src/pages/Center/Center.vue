@@ -124,7 +124,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
     @import '../../common/stylus/mixins.styl'
     .center //我的
         .header //头部公共css

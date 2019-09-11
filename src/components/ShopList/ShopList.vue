@@ -87,7 +87,7 @@
     }
   }
 </script>
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
     @import '../../common/stylus/mixins.styl'
     .homepage_shop_list
         top-border-1px(#e4e4e4)

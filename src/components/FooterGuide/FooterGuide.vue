@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
     @import "../../common/stylus/mixins.styl"
     .footerGuide
         top-border-1px(#e4e4e4)

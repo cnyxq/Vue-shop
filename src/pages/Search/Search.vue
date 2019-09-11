@@ -18,7 +18,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
     @import '../../common/stylus/mixins.styl'
     .search  //搜索
         .header //头部公共css
