@@ -38,14 +38,53 @@
     </div>
 </template>
 <script>
+  import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
   export default {
     name: 'shopGoods',
+    data () {
+      return {
+        tops: [], // 右侧每个食品分区的坐标
+        scrollY: 0 // 右侧滚动实时坐标
+      }
+    },
     computed: {
       ...mapState(['shopGoods'])
     },
     mounted() {
       this.$store.dispatch('getShopGoods')
+    },
+    watch: {
+      shopGoods() {
+        this.$nextTick(() => {
+          this.initScroll()
+          this.initTops()
+        })
+      }
+    },
+    methods: {
+      // 初始化滚动条
+      initScroll() {
+        new BScroll('.menu-wrapper')
+        let foodScroll = new BScroll('.foods-wrapper',{
+          probeType: 3
+        })
+        foodScroll.on('scroll',(event) => {
+          this.scrollY = Math.floor(event.y)
+        })
+      },
+      // 初始化食品坐标
+      initTops() {
+        let tops = []
+        let top = 0
+        tops.push(top)
+        const lis = document.getElementsByClassName('food-list-hook')
+        Array.prototype.slice.call(lis).forEach(li => {
+          top += li.clientHeight
+          tops.push(top)
+        })
+        this.tops = tops
+      }
     }
   }
 </script>
