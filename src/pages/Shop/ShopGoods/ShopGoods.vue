@@ -3,7 +3,7 @@
         <div class="goods">
             <div class="menu-wrapper" ref="menuWrapper">
                 <ul>
-                    <li class="menu-item current" v-for="(item,index) in shopGoods" :key="index">
+                    <li class="menu-item" :class="{current: index === currentIndex}" @click="clickMenuIndex(index)" v-for="(item,index) in shopGoods" :key="index">
                         <span class="text bottom-border-1px">
                         <img class="icon" :src="item.icon" v-if="item.icon">{{item.name}}</span>
                     </li>
@@ -49,7 +49,18 @@
       }
     },
     computed: {
-      ...mapState(['shopGoods'])
+      ...mapState(['shopGoods']),
+      // 计算得到当前分类的下标
+      currentIndex() {
+        // 得到条件数据
+        const {scrollY, tops} = this
+        // 根据条件数据计算结果
+        const index = tops.findIndex((top,index) => {
+          return scrollY >= top && scrollY < tops[index+1] // 大于等于当前坐标，小于下一分类坐标
+        })
+        //返回结果
+        return index
+      }
     },
     mounted() {
       this.$store.dispatch('getShopGoods')
@@ -65,17 +76,23 @@
     methods: {
       // 初始化滚动条
       initScroll() {
-        new BScroll('.menu-wrapper')
-        let foodScroll = new BScroll('.foods-wrapper',{
-          probeType: 3
+        new BScroll('.menu-wrapper',{
+          click: true
         })
-        foodScroll.on('scroll',(event) => {
-          this.scrollY = Math.floor(event.y)
+        this.foodScroll = new BScroll('.foods-wrapper',{
+          probeType: 3,
+          click: true
+        })
+        this.foodScroll.on('scroll',(event) => {
+          this.scrollY = Math.abs(event.y) // abs返回绝对值
+        })
+        this.foodScroll.on('scrollEnd',(event) => {
+          this.scrollY = Math.abs(event.y)
         })
       },
       // 初始化食品坐标
       initTops() {
-        let tops = []
+        const tops = []
         let top = 0
         tops.push(top)
         const lis = document.getElementsByClassName('food-list-hook')
@@ -84,6 +101,11 @@
           tops.push(top)
         })
         this.tops = tops
+      },
+      clickMenuIndex(index) {
+        const Y = this.tops[index]
+        this.scrollY = Y
+        this.foodScroll.scrollTo(0,-Y,300)
       }
     }
   }
