@@ -11,9 +11,10 @@
             </div>
             <div class="foods-wrapper" ref="foodsWrapper">
                 <ul>
-                    <li class="food-list-hook" v-for="(item,index) in shopGoods" :key="index"><h1 class="title">{{item.name}}</h1>
+                    <li class="food-list-hook" v-for="(item,index) in shopGoods" :key="index">
+                        <h1 class="title">{{item.name}}</h1>
                         <ul>
-                            <li class="food-item bottom-border-1px" v-for="(i,index) in item.foods" :key="index">
+                            <li class="food-item bottom-border-1px" v-for="(i,index) in item.foods" :key="index" @click="showFood(i)">
                                 <div class="icon">
                                     <img width="57" height="57" :src="i.icon">
                                 </div>
@@ -27,7 +28,7 @@
                                     <div class="price">
                                         <span class="now">￥{{i.price}}</span>
                                     </div>
-                                    <div class="cartcontrol-wrapper"> CartControl</div>
+                                    <div class="cartcontrol-wrapper"> <cart-control :food="i"></cart-control></div>
                                 </div>
                             </li>
                         </ul>
@@ -35,17 +36,21 @@
                 </ul>
             </div>
         </div>
+        <food :food="food" ref="food"></food>
     </div>
 </template>
 <script>
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
+  import CartControl from '../../../components/CartControl/CartControl.vue'
+  import Food from '../../../components/Food/Food.vue'
   export default {
     name: 'shopGoods',
     data () {
       return {
         tops: [], // 右侧每个食品分区的坐标
-        scrollY: 0 // 右侧滚动实时坐标
+        scrollY: 0, // 右侧滚动实时坐标
+        food: {}
       }
     },
     computed: {
@@ -106,7 +111,16 @@
         const Y = this.tops[index]
         this.scrollY = Y
         this.foodScroll.scrollTo(0,-Y,300)
+      },
+      showFood(food) {
+        console.log(1)
+        this.food = food
+        this.$refs.food.toggleShow()
       }
+    },
+    components: {
+      'cart-control': CartControl,
+      'food': Food
     }
   }
 </script>

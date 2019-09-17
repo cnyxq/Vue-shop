@@ -7,3 +7,6 @@ export const RESET_USERINFO = 'reset_userInfo' // 清空登录信息
 export const RECEIVE_SHOPINFO = 'receive_shopInfo' // 接收商家信息
 export const RECEIVE_SHOPRATINGS = 'receive_shopRatings' // 接收商家评论信息
 export const RECEIVE_SHOPGOODS = 'receive_shopGoods' // 接收商家商品信息
+
+export const INCREMENT_FOOD_COUNT = 'increment_food_count'
+export const DECREMENT_FOOD_COUNT = 'decrement_food_count'

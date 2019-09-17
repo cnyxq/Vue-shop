@@ -6,8 +6,11 @@ import {
   RESET_USERINFO,
   RECEIVE_SHOPINFO,
   RECEIVE_SHOPRATINGS,
-  RECEIVE_SHOPGOODS
+  RECEIVE_SHOPGOODS,
+  INCREMENT_FOOD_COUNT,
+  DECREMENT_FOOD_COUNT
 } from './mutation-types.js'
+import Vue from 'vue'
 
 export default {
   [RECEIVE_ADDRESS] (state,{ address }) {
@@ -34,4 +37,16 @@ export default {
   [RECEIVE_SHOPINFO] (state,{ shopInfo }) {
     state.shopInfo = shopInfo
   },
+  [INCREMENT_FOOD_COUNT] (state, { food }) {
+    if(!food.count) {
+      Vue.set(food, 'count', 1)
+    }else {
+      food.count++
+    }
+  },
+  [DECREMENT_FOOD_COUNT] (state, { food }) {
+    if(food.count) {
+      food.count--
+    }
+  }
 }
