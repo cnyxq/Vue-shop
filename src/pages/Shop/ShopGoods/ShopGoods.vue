@@ -37,6 +37,7 @@
             </div>
         </div>
         <food :food="food" ref="food"></food>
+        <shop-cart></shop-cart>
     </div>
 </template>
 <script>
@@ -44,6 +45,7 @@
   import {mapState} from 'vuex'
   import CartControl from '../../../components/CartControl/CartControl.vue'
   import Food from '../../../components/Food/Food.vue'
+  import ShopCart from '../../../components/ShopCart/ShopCart.vue'
   export default {
     name: 'shopGoods',
     data () {
@@ -113,14 +115,14 @@
         this.foodScroll.scrollTo(0,-Y,300)
       },
       showFood(food) {
-        console.log(1)
         this.food = food
         this.$refs.food.toggleShow()
       }
     },
     components: {
       'cart-control': CartControl,
-      'food': Food
+      'food': Food,
+      'shop-cart': ShopCart
     }
   }
 </script>

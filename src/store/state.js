@@ -5,7 +5,8 @@ export default {
   foodTypes: [],// 食品分类
   shopList: [],// 商家列表
   userInfo: {},// 用户信息
-  shopGoods: [],
-  shopRatings: [],
-  shopInfo: {}
+  shopGoods: [], // 商家食品信息
+  shopRatings: [], // 商家评论
+  shopInfo: {}, // 商家信息
+  cartFood: [] // 购物车里的食物列表
 }

@@ -18,13 +18,14 @@
                     <span class="now">￥{{food.price}}</span>
                     <span class="old" style="display: none;">￥</span>
                 </div>
-                <div class="cartcontrol-wrapper"> cartcontrol 组件</div>
+                <div class="cartcontrol-wrapper"><cart-control :food="food"></cart-control></div>
             </div>
         </div>
-        <div class="food-cover"></div>
+        <div class="food-cover" @click="toggleShow"></div>
     </div>
 </template>
 <script>
+  import CartControl from '../../components/CartControl/CartControl.vue'
   export default {
     name: 'food',
     data () {
@@ -39,6 +40,9 @@
       toggleShow() {
         this.isShow = !this.isShow
       }
+    },
+    components: {
+      'cart-control': CartControl
     }
   }
 </script>
@@ -115,7 +119,7 @@
                         margin-right: 12px
                 .price
                     font-weight: 700
-                    line-height: 24px
+                    line-height: 10px
                     .now
                         margin-right: 8px
                         font-size: 14px
