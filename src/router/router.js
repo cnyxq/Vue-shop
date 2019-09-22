@@ -1,8 +1,16 @@
 import VueRouter from 'vue-router'
-import HomePage from '../pages/HomePage/HomePage.vue'
+
+/*import HomePage from '../pages/HomePage/HomePage.vue'
 import Order from '../pages/Order/Order.vue'
 import Center from '../pages/Center/Center.vue'
-import Search from '../pages/Search/Search.vue'
+import Search from '../pages/Search/Search.vue'*/
+
+// 路由懒加载
+const HomePage = () => import('../pages/HomePage/HomePage.vue')
+const Order = () => import('../pages/Order/Order.vue')
+const Center = () => import('../pages/Center/Center.vue')
+const Search = () => import('../pages/Search/Search.vue')
+
 import Login from "../pages/Login/Login.vue";
 import UserInfo from "../pages/UserInfo/UserInfo.vue"
 import Shop from "../pages/Shop/Shop.vue";

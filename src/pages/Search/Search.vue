@@ -1,17 +1,55 @@
 <template>
     <section class="search">
         <header-top title="搜索"></header-top>
-        <form class="search_form" action="#">
-            <input type="search" name="search" placeholder="请输入商家或美食名称" class="search_input">
+        <form class="search_form" action="#" @submit.prevent="search">
+            <input type="search" name="search" placeholder="请输入商家或美食名称" class="search_input" v-model="keyword">
             <input type="submit" name="submit" class="search_submit">
         </form>
+        <section class="list">
+            <ul class="list_container">
+                <!--{path:'/shop', query:{id:item.id}}-->
+                <router-link :to="'/shop?id='+item.id" tag="li" v-for="item in searchShops" :key="item.id" class="list_li">
+                    <section class="item_left">
+                        <img :src="imgBaseUrl + item.image_path" class="restaurant_img">
+                    </section>
+                    <section class="item_right">
+                        <div class="item_right_text">
+                            <p>
+                                <span>{{item.name}}</span>
+                            </p>
+                            <p>月售 {{item.month_sales||item.recent_order_num}} 单</p>
+                            <p>{{item.delivery_fee||item.float_minimum_order_amount}} 元起送 / 距离{{item.distance}}</p>
+                        </div>
+                    </section>
+                </router-link>
+            </ul>
+        </section>
     </section>
 </template>
 
 <script>
   import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+  import {mapState} from 'vuex'
+
   export default {
     name: 'search',
+    data() {
+      return {
+        keyword: '',
+        imgBaseUrl: 'http://cangdu.org:8001/img/'
+      }
+    },
+    methods: {
+      search() {
+        const keyword = this.keyword.trim()
+        if(keyword){
+          this.$store.dispatch('searchShop',keyword)
+        }
+      }
+    },
+    computed: {
+      ...mapState(['searchShops'])
+    },
     components: {
       'header-top': HeaderTop
     }
@@ -20,25 +58,10 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     @import '../../common/stylus/mixins.styl'
-    .search  //搜索
-        .header //头部公共css
-            background-color #02a774
-            position fixed
-            z-index 100
-            left 0
-            top 0
-            width 100%
-            height 45px
-            .header_title
-                position absolute
-                top 50%
-                left 50%
-                transform translate(-50%, -50%)
-                width 30%
-                color #fff
-                font-size 22px
-                text-align center
+    .search
         width 100%
+        height 100%
+        overflow hidden
         .search_form
             clearFix()
             margin-top 45px
@@ -64,4 +87,34 @@
                     font-size 16px
                     color #fff
                     background-color #02a774
+
+        .list
+            .list_container
+                background-color: #fff;
+                .list_li
+                    display: flex;
+                    justify-content: center;
+                    padding: 10px
+                    border-bottom: 1px solid $bc;
+                    .item_left
+                        margin-right: 10px
+                        .restaurant_img
+                            width 50px
+                            height 50px
+                            display block
+                    .item_right
+                        font-size 12px
+                        flex 1
+                        .item_right_text
+                            p
+                                line-height 12px
+                                margin-bottom 6px
+                                &:last-child
+                                    margin-bottom 0
+        .search_none
+            margin: 0 auto
+            color: #333
+            background-color: #fff
+            text-align: center
+            margin-top: 0.125rem
 </style>

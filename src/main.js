@@ -8,6 +8,7 @@ import { Button } from 'mint-ui'
 import 'mint-ui/lib/style.min.css'
 import 'mint-ui/lib/index'
 import './mock/mockServer.js'
+import './filters' //加载时期格式化
 Vue.component(Button.name,Button)
 Vue.use(VueRouter)
 
